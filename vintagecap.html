@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vintage Cap - Zass Store</title>
+
+<style>
+body{margin:0;font-family:'Poppins',sans-serif;background:#f7f3ef;padding-top:100px;}
+/* ---------- NAVBAR ---------- */
+.navbar{width:100%;background:#4E342E;padding:12px 35px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 10px rgba(0,0,0,0.2);position:fixed;top:0;left:0;height:70px;z-index:100;box-sizing:border-box;}
+.logo img{width:180px;height:230px;margin-left:-50px;margin-top:4px;object-fit:contain;}
+.menu{display:flex;gap:35px;font-weight:600;}
+.menu a{text-decoration:none;color:white;}
+.menu a:hover,.menu a.active{color:#ffcc80;}
+/* ---------- CONTENT ---------- */
+.title{text-align:center;margin:40px 0 10px;font-size:32px;font-weight:700;color:#4E342E;}
+.grid{width:90%;margin:40px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+.item{background:white;padding:15px;border-radius:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.1);position:relative;}
+.item img{width:100%;height:300px;object-fit:cover;border-radius:10px;}
+.item h3{color:#4E342E;margin:12px 0 6px;}
+.item p{font-weight:600;font-size:18px;}
+.btn{background:#4E342E;color:white;padding:10px 18px;border-radius:8px;border:none;cursor:pointer;display:inline-block;margin-top:10px;}
+.btn:hover{background:#3a2823;}
+/* ---------- DETAILS POPUP ---------- */
+.details-popup{display:none;position:absolute;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:250px;background:white;border-radius:12px;padding:15px;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:10;}
+.details-popup h4{text-align:center;color:#4E342E;margin-top:0;}
+.details-popup p{margin:6px 0;font-size:14px;font-weight:600;}
+.details-popup .close-btn{margin-top:10px;background:#4E342E;color:white;padding:6px 10px;border-radius:6px;display:block;text-align:center;cursor:pointer;}
+.details-popup .close-btn:hover{background:#3a2823;}
+/* ---------- FLOATING CART ---------- */
+.floating-cart{position:fixed;bottom:20px;left:20px;background:#4E342E;color:white;padding:14px 18px;border-radius:30px;font-weight:600;cursor:pointer;z-index:999;}
+.cart-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;}
+.cart-box{background:white;width:320px;padding:20px;border-radius:12px;position:absolute;bottom:80px;left:20px;}
+</style>
+</head>
+<body>
+
+<!-- FLOATING CART -->
+<div class="floating-cart" onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
+
+<div class="cart-popup" id="cartPopup">
+<div class="cart-box">
+<h3>Your Cart</h3>
+<div id="cartItems"></div>
+<hr>
+<p><strong>Total: RM <span id="cartTotal">0</span></strong></p>
+<a href="checkout.html" class="btn">Checkout</a>
+<button class="btn" onclick="toggleCart()">Close</button>
+</div>
+</div>
+
+<script src="cart.js"></script>
+
+<!-- NAVBAR -->
+<div class="navbar">
+<div class="logo"><a href="body.html"><img src="homebutton.png"></a></div>
+<div class="menu">
+<a href="clothes.html">CLOTHES</a>
+<a href="pants.html">PANTS</a>
+<a href="shoes.html">SHOES</a>
+<a href="cap.html" class="active">CAP</a>
+<a href="teamzass.html">#TEAMZASS</a>
+</div>
+</div>
+
+<div class="content">
+<h1 class="title">Vintage Cap Collection</h1>
+<div style="width:90%; margin:10px auto 30px;">
+<a href="cap.html" class="btn">← Back to Cap Collection</a>
+</div>
+
+<div class="grid">
+<!-- Vintage Brown Cap -->
+<div class="item">
+<img src="vintage1.jpg" alt="Vintage Brown Cap">
+<h3>Vintage Brown Cap</h3>
+<p>RM25</p>
+<button class="btn" onclick="addToCart('Vintage Brown Cap',25)">Add to Cart</button>
+<button class="btn" onclick="showDetails(this)">Details</button>
+<div class="details-popup">
+<h4>Vintage Brown Cap</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+<!-- Vintage Black Cap -->
+<div class="item">
+<img src="vintage2.jpg" alt="Vintage Black Cap">
+<h3>Vintage Black Cap</h3>
+<p>RM25</p>
+<button class="btn" onclick="addToCart('Vintage Black Cap',25)">Add to Cart</button>
+<button class="btn" onclick="showDetails(this)">Details</button>
+<div class="details-popup">
+<h4>Vintage Black Cap</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+<!-- Vintage Denim Cap -->
+<div class="item">
+<img src="vintage3.jpg" alt="Vintage Denim Cap">
+<h3>Vintage Denim Cap</h3>
+<p>RM30</p>
+<button class="btn" onclick="addToCart('Vintage Denim Cap',30)">Add to Cart</button>
+<button class="btn" onclick="showDetails(this)">Details</button>
+<div class="details-popup">
+<h4>Vintage Denim Cap</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+<!-- Vintage Grey Cap -->
+<div class="item">
+<img src="vintage4.jpg" alt="Vintage Grey Cap">
+<h3>Vintage Grey Cap</h3>
+<p>RM28</p>
+<button class="btn" onclick="addToCart('Vintage Grey Cap',28)">Add to Cart</button>
+<button class="btn" onclick="showDetails(this)">Details</button>
+<div class="details-popup">
+<h4>Vintage Grey Cap</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+<!-- Vintage Washed Cap -->
+<div class="item">
+<img src="vintage5.jpg" alt="Vintage Washed Cap">
+<h3>Vintage Washed Cap</h3>
+<p>RM30</p>
+<button class="btn" onclick="addToCart('Vintage Washed Cap',30)">Add to Cart</button>
+<button class="btn" onclick="showDetails(this)">Details</button>
+<div class="details-popup">
+<h4>Vintage Washed Cap</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+<!-- Vintage Green Cap -->
+<div class="item">
+<img src="vintage6.jpg" alt="Vintage Green Cap">
+<h3>Vintage Green Cap</h3>
+<p>RM30</p>
+<button class="btn" onclick="addToCart('Vintage Green Cap',30)">Add to Cart</button>
+<button class="btn" onclick="showDetails(this)">Details</button>
+<div class="details-popup">
+<h4>Vintage Green Cap</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+function showDetails(btn){
+    const popup = btn.nextElementSibling;
+    popup.style.display = 'block';
+}
+function closeDetails(span){
+    const popup = span.parentElement;
+    popup.style.display = 'none';
+}
+function toggleCart(){
+    const cartPopup = document.getElementById('cartPopup');
+    cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweatpants - Zass Store</title>
+<style>
+body { margin:0; font-family:'Poppins',sans-serif; background:#f7f3ef; padding-top:100px; }
+
+/* NAVBAR */
+.navbar { width:100%; height:70px; background:#4E342E; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 10px rgba(0,0,0,0.2); position:fixed; top:0; left:0; z-index:100; }
+.logo img { width:180px; height:230px; object-fit:contain; cursor:pointer; margin-left:-50px; margin-top:4px; }
+.menu { display:flex; gap:35px; font-size:16px; font-weight:600; }
+.menu a { text-decoration:none; color:#fff; }
+.menu a:hover, .menu a.active { color:#ffcc80; }
+
+/* PAGE CONTENT */
+.title { text-align:center; margin:40px 0 10px; font-size:32px; font-weight:700; color:#4E342E; }
+.grid { width:90%; margin:40px auto; display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
+.item { background:white; padding:15px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; position:relative; }
+.item img { width:100%; height:250px; object-fit:cover; border-radius:10px; }
+.item h3 { margin:12px 0 6px; color:#4E342E; }
+.item p { font-weight:600; font-size:18px; }
+.btn { background:#4E342E; color:white; padding:10px 18px; border-radius:8px; text-decoration:none; display:inline-block; margin-top:10px; cursor:pointer; }
+.btn:hover { background:#3a2823; }
+
+/* DETAILS POPUP */
+.details-popup {
+    display:none; position:absolute; top:10%; left:50%; transform:translateX(-50%);
+    width:90%; max-width:250px; background:white; border-radius:12px; padding:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2); z-index:10;
+}
+.details-popup h4 { margin-top:0; color:#4E342E; text-align:center; }
+.details-popup p { margin:6px 0; font-size:14px; font-weight:600; }
+.details-popup .close-btn { margin-top:10px; background:#4E342E; color:white; padding:6px 10px; border-radius:6px; display:block; text-align:center; cursor:pointer; }
+.details-popup .close-btn:hover { background:#3a2823; }
+
+/* CART */
+.floating-cart { position:fixed; bottom:20px; left:20px; background:#4E342E; color:white; padding:14px 18px; border-radius:30px; font-weight:600; cursor:pointer; z-index:999; }
+.cart-popup { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000; }
+.cart-box { background:white; width:320px; padding:20px; border-radius:12px; position:absolute; bottom:80px; left:20px; }
+</style>
+</head>
+<body>
+
+<!-- FLOATING CART -->
+<div class="floating-cart" onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
+
+<!-- CART POPUP -->
+<div class="cart-popup" id="cartPopup">
+    <div class="cart-box">
+        <h3>Your Cart</h3>
+        <div id="cartItems"></div>
+        <hr>
+        <p><strong>Total: RM <span id="cartTotal">0</span></strong></p>
+        <a href="checkout.html" class="btn">Checkout</a>
+        <button class="btn" onclick="toggleCart()">Close</button>
+    </div>
+</div>
+
+<script src="cart.js"></script>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo"><a href="body.html"><img src="homebutton.png" alt="Home Button"></a></div>
+    <div class="menu">
+        <a href="clothes.html">CLOTHES</a>
+        <a href="pants.html" class="active">PANTS</a>
+        <a href="shoes.html">SHOES</a>
+        <a href="cap.html">CAP</a>
+        <a href="teamzass.html">#TEAMZASS</a>
+    </div>
+</div>
+
+<h1 class="title">Sweatpants Collection</h1>
+<div style="width:90%; margin:10px auto 30px; text-align:left;">
+    <a href="pants.html" class="btn">← Back to Pants Collection</a>
+</div>
+
+<div class="grid">
+    <div class="item">
+        <img src="sweatpants1.jpg" alt="Sweatpants 1">
+        <h3>Sweatpants 1</h3>
+        <p>RM30</p>
+        <a class="btn" onclick="addToCart('Sweatpants 1',30)">Add to Cart</a>
+        <a class="btn" onclick="showDetails(this)">Details</a>
+        <div class="details-popup">
+            <h4>Sweatpants 1 Details</h4>
+            <p><strong>Waist:</strong> 32"</p>
+            <p><strong>Length:</strong> 36"</p>
+            <p><strong>Condition:</strong> New</p>
+            <span class="close-btn" onclick="closeDetails(this)">Close</span>
+        </div>
+    </div>
+
+    <div class="item">
+        <img src="sweatpants2.jpg" alt="Sweatpants 2">
+        <h3>Sweatpants 2</h3>
+        <p>RM30</p>
+        <a class="btn" onclick="addToCart('Sweatpants 2',30)">Add to Cart</a>
+        <a class="btn" onclick="showDetails(this)">Details</a>
+        <div class="details-popup">
+            <h4>Sweatpants 2 Details</h4>
+            <p><strong>Waist:</strong> 34"</p>
+            <p><strong>Length:</strong> 38"</p>
+            <p><strong>Condition:</strong> New</p>
+            <span class="close-btn" onclick="closeDetails(this)">Close</span>
+        </div>
+    </div>
+
+    <div class="item">
+        <img src="sweatpants3.jpg" alt="Sweatpants 3">
+        <h3>Sweatpants 3</h3>
+        <p>RM30</p>
+        <a class="btn" onclick="addToCart('Sweatpants 3',30)">Add to Cart</a>
+        <a class="btn" onclick="showDetails(this)">Details</a>
+        <div class="details-popup">
+            <h4>Sweatpants 3 Details</h4>
+            <p><strong>Waist:</strong> 36"</p>
+            <p><strong>Length:</strong> 40"</p>
+            <p><strong>Condition:</strong> New</p>
+            <span class="close-btn" onclick="closeDetails(this)">Close</span>
+        </div>
+    </div>
+
+    <!-- Tambah lagi sweatpants ikut format sama -->
+</div>
+
+<script>
+function showDetails(btn){
+    const popup = btn.nextElementSibling;
+    popup.style.display = 'block';
+}
+function closeDetails(span){
+    const popup = span.parentElement;
+    popup.style.display = 'none';
+}
+function toggleCart(){
+    const cartPopup = document.getElementById('cartPopup');
+    cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+
+</body>
+</html>

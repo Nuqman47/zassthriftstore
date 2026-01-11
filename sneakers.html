@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sneakers - Zass Store</title>
+<style>
+body { margin:0; font-family:'Poppins',sans-serif; background:#f7f3ef; padding-top:100px; }
+
+/* NAVBAR */
+.navbar { width:100%; height:70px; background:#4E342E; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 10px rgba(0,0,0,0.2); position:fixed; top:0; left:0; z-index:100; }
+.logo img { width:180px; height:230px; object-fit:contain; cursor:pointer; margin-left:-50px; margin-top:4px; }
+.menu { display:flex; gap:35px; font-size:16px; font-weight:600; }
+.menu a { text-decoration:none; color:#fff; }
+.menu a:hover, .menu a.active { color:#ffcc80; }
+
+/* PAGE CONTENT */
+.title { text-align:center; margin:40px 0 10px; font-size:32px; font-weight:700; color:#4E342E; }
+.grid { width:90%; margin:40px auto; display:grid; grid-template-columns:repeat(3,1fr); gap:30px; }
+.item { background:white; padding:15px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; position:relative; }
+.item img { width:100%; height:300px; object-fit:cover; border-radius:10px; }
+.item h3 { margin:12px 0 6px; color:#4E342E; }
+.item p { font-weight:600; font-size:18px; }
+.btn { background:#4E342E; color:white; padding:10px 18px; border-radius:8px; text-decoration:none; display:inline-block; margin-top:10px; cursor:pointer; }
+.btn:hover { background:#3a2823; }
+
+/* DETAILS POPUP */
+.details-popup { display:none; position:absolute; top:10%; left:50%; transform:translateX(-50%); width:90%; max-width:250px; background:white; border-radius:12px; padding:15px; box-shadow:0 4px 12px rgba(0,0,0,0.2); z-index:10; }
+.details-popup h4 { margin-top:0; color:#4E342E; text-align:center; }
+.details-popup p { margin:6px 0; font-size:14px; font-weight:600; }
+.details-popup .close-btn { margin-top:10px; background:#4E342E; color:white; padding:6px 10px; border-radius:6px; display:block; text-align:center; cursor:pointer; }
+.details-popup .close-btn:hover { background:#3a2823; }
+
+/* CART */
+.floating-cart { position:fixed; bottom:20px; left:20px; background:#4E342E; color:white; padding:14px 18px; border-radius:30px; font-weight:600; cursor:pointer; z-index:999; }
+.cart-popup { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000; }
+.cart-box { background:white; width:320px; padding:20px; border-radius:12px; position:absolute; bottom:80px; left:20px; }
+</style>
+</head>
+<body>
+
+<!-- FLOATING CART -->
+<div class="floating-cart" onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
+
+<!-- CART POPUP -->
+<div class="cart-popup" id="cartPopup">
+    <div class="cart-box">
+        <h3>Your Cart</h3>
+        <div id="cartItems"></div>
+        <hr>
+        <p><strong>Total: RM <span id="cartTotal">0</span></strong></p>
+        <a href="checkout.html" class="btn">Checkout</a>
+        <button class="btn" onclick="toggleCart()">Close</button>
+    </div>
+</div>
+
+<script src="cart.js"></script>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo"><a href="body.html"><img src="homebutton.png" alt="Home Button"></a></div>
+    <div class="menu">
+        <a href="clothes.html">CLOTHES</a>
+        <a href="pants.html">PANTS</a>
+        <a href="shoes.html" class="active">SHOES</a>
+        <a href="cap.html">CAP</a>
+        <a href="teamzass.html">#TEAMZASS</a>
+    </div>
+</div>
+
+<h1 class="title">Sneakers Collection</h1>
+<div style="width:90%; margin:10px auto 30px; text-align:left;">
+    <a href="shoes.html" class="btn">← Back to Shoes Collection</a>
+</div>
+
+<div class="grid">
+    <!-- Item 1 -->
+    <div class="item">
+        <img src="sneakers1.jpg" alt="Adidas Handball Spezial">
+        <h3>Adidas Handball Spezial</h3>
+        <p>RM60</p>
+        <a class="btn" onclick="addToCart('Adidas Handball Spezial',60)">Add to Cart</a>
+        <a class="btn" onclick="showDetails(this)">Details</a>
+        <div class="details-popup">
+            <h4>Adidas Handball Spezial</h4>
+            <p><strong>Size:</strong> 9 US</p>
+            <p><strong>Condition:</strong> New</p>
+            <span class="close-btn" onclick="closeDetails(this)">Close</span>
+        </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="item">
+        <img src="sneakers2.jpg" alt="Adidas Samba OG">
+        <h3>Adidas Samba OG</h3>
+        <p>RM65</p>
+        <a class="btn" onclick="addToCart('Adidas Samba OG',65)">Add to Cart</a>
+        <a class="btn" onclick="showDetails(this)">Details</a>
+        <div class="details-popup">
+            <h4>Adidas Samba OG</h4>
+            <p><strong>Size:</strong> 8 US</p>
+            <p><strong>Condition:</strong> New</p>
+            <span class="close-btn" onclick="closeDetails(this)">Close</span>
+        </div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="item">
+        <img src="sneakers3.jpg" alt="NB 530SG">
+        <h3>NB 530SG</h3>
+        <p>RM70</p>
+        <a class="btn" onclick="addToCart('NB 530SG',70)">Add to Cart</a>
+        <a class="btn" onclick="showDetails(this)">Details</a>
+        <div class="details-popup">
+            <h4>NB 530SG</h4>
+            <p><strong>Size:</strong> 9 US</p>
+            <p><strong>Condition:</strong> New</p>
+            <span class="close-btn" onclick="closeDetails(this)">Close</span>
+        </div>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="item">
+        <img src="sneakers4.jpg" alt="Nike P-6000">
+        <h3>Nike P-6000</h3>
+        <p>RM68</p>
+        <a class="btn" onclick="addToCart('Nike P-6000',68)">Add to Cart</a>
+        <a class="btn" onclick="showDetails(this)">Details</a>
+        <div class="details-popup">
+            <h4>Nike P-6000</h4>
+            <p><strong>Size:</strong> 10 US</p>
+            <p><strong>Condition:</strong> New</p>
+            <span class="close-btn" onclick="closeDetails(this)">Close</span>
+        </div>
+    </div>
+
+    <!-- Item 5 -->
+    <div class="item">
+        <img src="sneakers5.jpg" alt="ASICS GEL-Kinetic Fluent">
+        <h3>ASICS GEL-Kinetic Fluent</h3>
+        <p>RM72</p>
+        <a class="btn" onclick="addToCart('ASICS GEL-Kinetic Fluent',72)">Add to Cart</a>
+        <a class="btn" onclick="showDetails(this)">Details</a>
+        <div class="details-popup">
+            <h4>ASICS GEL-Kinetic Fluent</h4>
+            <p><strong>Size:</strong> 9 US</p>
+            <p><strong>Condition:</strong> New</p>
+            <span class="close-btn" onclick="closeDetails(this)">Close</span>
+        </div>
+    </div>
+
+    <!-- Item 6 -->
+    <div class="item">
+        <img src="sneakers6.jpg" alt="Air Jordan 1 Retro Low OG">
+        <h3>Air Jordan 1 Retro Low OG</h3>
+        <p>RM75</p>
+        <a class="btn" onclick="addToCart('Air Jordan 1 Retro Low OG',75)">Add to Cart</a>
+        <a class="btn" onclick="showDetails(this)">Details</a>
+        <div class="details-popup">
+            <h4>Air Jordan 1 Retro Low OG</h4>
+            <p><strong>Size:</strong> 10 US</p>
+            <p><strong>Condition:</strong> New</p>
+            <span class="close-btn" onclick="closeDetails(this)">Close</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function showDetails(btn){
+    const popup = btn.nextElementSibling;
+    popup.style.display = 'block';
+}
+function closeDetails(span){
+    const popup = span.parentElement;
+    popup.style.display = 'none';
+}
+function toggleCart(){
+    const cartPopup = document.getElementById('cartPopup');
+    cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shirt - Zass Store</title>
+
+<style>
+body { 
+    margin: 0; 
+    font-family: 'Poppins', sans-serif; 
+    background: #f7f3ef; 
+}
+
+/* NAVBAR */
+.navbar {
+    width: 100%;
+    background: #4E342E;
+    padding: 12px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    height: 70px;
+    box-sizing: border-box;
+}
+
+.logo img {
+    width: 180px;
+    height: 230px;
+    cursor: pointer;
+    margin-left: -50px;
+    margin-top: 4px;
+    object-fit: contain;
+}
+
+.menu {
+    display: flex;
+    gap: 35px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.menu a:hover,
+.menu a.active {
+    color: #ffcc80;
+}
+
+/* PAGE CONTENT */
+.content { padding-top: 100px; }
+.title { text-align: center; margin: 40px 0 10px; font-size: 32px; font-weight: 700; color: #4E342E; }
+
+.grid {
+    width: 90%;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.item {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    position: relative;
+}
+
+.item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.item h3 { margin: 12px 0 6px; color: #4E342E; }
+.item p { font-weight: 600; font-size: 18px; }
+
+.btn {
+    background: #4E342E;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.btn:hover { background: #3a2823; }
+
+/* DETAILS POPUP */
+.details-popup {
+    display: none;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 250px;
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+.details-popup h4 { margin-top:0; color:#4E342E; text-align:center; }
+.details-popup p { margin:6px 0; font-size:14px; font-weight:600; }
+.details-popup .close-btn {
+    margin-top:10px;
+    background:#4E342E;
+    color:white;
+    padding:6px 10px;
+    border-radius:6px;
+    display:block;
+    text-align:center;
+    cursor:pointer;
+}
+.details-popup .close-btn:hover { background:#3a2823; }
+
+/* CART */
+.floating-cart {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #4E342E;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.cart-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1000;
+}
+
+.cart-box {
+    background: white;
+    width: 320px;
+    padding: 20px;
+    border-radius: 12px;
+    position: absolute;
+    bottom: 80px;
+    left: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- FLOATING CART -->
+<div class="floating-cart" onclick="toggleCart()">
+    🛒 Cart (<span id="cartCount">0</span>)
+</div>
+
+<!-- CART POPUP -->
+<div class="cart-popup" id="cartPopup">
+    <div class="cart-box">
+        <h3>Your Cart</h3>
+        <div id="cartItems"></div>
+        <hr>
+        <p><strong>Total: RM <span id="cartTotal">0</span></strong></p>
+        <a href="checkout.html" class="btn">Checkout</a>
+        <button class="btn" onclick="toggleCart()">Close</button>
+    </div>
+</div>
+
+<script src="cart.js"></script>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo"><a href="body.html"><img src="homebutton.png" alt="Home Button"></a></div>
+    <div class="menu">
+        <a href="clothes.html" class="active">CLOTHES</a>
+        <a href="pants.html">PANTS</a>
+        <a href="shoes.html">SHOES</a>
+        <a href="cap.html">CAP</a>
+        <a href="teamzass.html">#TEAMZASS</a>
+    </div>
+</div>
+
+<div class="content">
+
+    <h1 class="title">Shirt Collection</h1>
+
+    <div style="width:90%; margin:10px auto 30px; text-align:left;">
+        <a href="clothes.html" class="btn">← Back to Clothes Collection</a>
+    </div>
+
+    <div class="grid">
+        <div class="item">
+            <img src="shirt1.jpg" alt="White Shirt">
+            <h3>White Shirt</h3>
+            <p>RM35</p>
+            <a class="btn" onclick="addToCart('White Shirt', 35)">Add to Cart</a>
+            <a class="btn" onclick="showDetails(this)">Details</a>
+            <div class="details-popup">
+                <h4>White Shirt Details</h4>
+                <p><strong>Pit:</strong> 22"</p>
+                <p><strong>Length:</strong> 28"</p>
+                <p><strong>Condition:</strong> New</p>
+                <span class="close-btn" onclick="closeDetails(this)">Close</span>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="shirt2.jpg" alt="Social Brain Black Shirt">
+            <h3>Social Brain Black Shirt</h3>
+            <p>RM35</p>
+            <a class="btn" onclick="addToCart('Social Brain Black Shirt', 35)">Add to Cart</a>
+            <a class="btn" onclick="showDetails(this)">Details</a>
+            <div class="details-popup">
+                <h4>Social Brain Black Shirt Details</h4>
+                <p><strong>Pit:</strong> 22"</p>
+                <p><strong>Length:</strong> 28"</p>
+                <p><strong>Condition:</strong> New</p>
+                <span class="close-btn" onclick="closeDetails(this)">Close</span>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="shirt3.jpg" alt="Blue Shirt">
+            <h3>Blue Shirt</h3>
+            <p>RM40</p>
+            <a class="btn" onclick="addToCart('Blue Shirt', 40)">Add to Cart</a>
+            <a class="btn" onclick="showDetails(this)">Details</a>
+            <div class="details-popup">
+                <h4>Blue Shirt Details</h4>
+                <p><strong>Pit:</strong> 23"</p>
+                <p><strong>Length:</strong> 29"</p>
+                <p><strong>Condition:</strong> New</p>
+                <span class="close-btn" onclick="closeDetails(this)">Close</span>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="shirt4.jpg" alt="Grey Shirt">
+            <h3>Grey Shirt</h3>
+            <p>RM40</p>
+            <a class="btn" onclick="addToCart('Grey Shirt', 40)">Add to Cart</a>
+            <a class="btn" onclick="showDetails(this)">Details</a>
+            <div class="details-popup">
+                <h4>Grey Shirt Details</h4>
+                <p><strong>Pit:</strong> 23"</p>
+                <p><strong>Length:</strong> 29"</p>
+                <p><strong>Condition:</strong> New</p>
+                <span class="close-btn" onclick="closeDetails(this)">Close</span>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="shirt5.jpg" alt="NB Green Shirt">
+            <h3>NB Green Shirt</h3>
+            <p>RM45</p>
+            <a class="btn" onclick="addToCart('NB Green Shirt', 45)">Add to Cart</a>
+            <a class="btn" onclick="showDetails(this)">Details</a>
+            <div class="details-popup">
+                <h4>NB Green Shirt Details</h4>
+                <p><strong>Pit:</strong> 24"</p>
+                <p><strong>Length:</strong> 30"</p>
+                <p><strong>Condition:</strong> New</p>
+                <span class="close-btn" onclick="closeDetails(this)">Close</span>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="shirt6.jpg" alt="Red Shirt">
+            <h3>Red Shirt</h3>
+            <p>RM45</p>
+            <a class="btn" onclick="addToCart('Red Shirt', 45)">Add to Cart</a>
+            <a class="btn" onclick="showDetails(this)">Details</a>
+            <div class="details-popup">
+                <h4>Red Shirt Details</h4>
+                <p><strong>Pit:</strong> 24"</p>
+                <p><strong>Length:</strong> 30"</p>
+                <p><strong>Condition:</strong> New</p>
+                <span class="close-btn" onclick="closeDetails(this)">Close</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function showDetails(btn){
+    const popup = btn.nextElementSibling;
+    popup.style.display = "block";
+}
+function closeDetails(span){
+    const popup = span.parentElement;
+    popup.style.display = "none";
+}
+function toggleCart(){
+    const cartPopup = document.getElementById('cartPopup');
+    cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baseball Cap - Zass Store</title>
+<style>
+body{margin:0;font-family:'Poppins',sans-serif;background:#f7f3ef;padding-top:100px;}
+/* NAVBAR */
+.navbar{width:100%;height:80px;background:#4E342E;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;z-index:100;}
+.logo{margin-left:-50px;}
+.logo img{width:230px;height:230px;object-fit:contain;}
+.menu{display:flex;gap:35px;font-weight:600;}
+.menu li{list-style:none;}
+.menu a{color:white;text-decoration:none;}
+.menu a:hover,.menu a.active{color:#ffcc80;}
+/* CONTENT */
+.title{text-align:center;margin:40px 0 10px;font-size:32px;color:#4E342E;}
+.grid{width:90%;margin:40px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+.item{background:white;padding:15px;border-radius:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.1);position:relative;}
+.item img{width:100%;height:250px;object-fit:cover;border-radius:10px;}
+.item h3{color:#4E342E;margin:12px 0 6px;}
+.item p{font-weight:600;font-size:18px;}
+.btn{background:#4E342E;color:white;padding:10px 18px;border-radius:8px;text-decoration:none;display:inline-block;margin-top:10px;cursor:pointer;}
+.btn:hover{background:#3a2823;}
+/* DETAILS POPUP */
+.details-popup{display:none;position:absolute;top:10%;left:50%;transform:translateX(-50%);width:90%;max-width:250px;background:white;border-radius:12px;padding:15px;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:10;}
+.details-popup h4{text-align:center;color:#4E342E;margin-top:0;}
+.details-popup p{margin:6px 0;font-size:14px;font-weight:600;}
+.details-popup .close-btn{margin-top:10px;background:#4E342E;color:white;padding:6px 10px;border-radius:6px;display:block;text-align:center;cursor:pointer;}
+.details-popup .close-btn:hover{background:#3a2823;}
+/* FLOATING CART */
+.floating-cart{position:fixed;bottom:20px;left:20px;background:#4E342E;color:white;padding:14px 18px;border-radius:30px;font-weight:600;cursor:pointer;z-index:999;}
+.cart-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);}
+.cart-box{background:white;width:320px;padding:20px;border-radius:12px;position:absolute;bottom:80px;left:20px;}
+</style>
+</head>
+<body>
+
+<div class="floating-cart" onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</div>
+
+<div class="cart-popup" id="cartPopup">
+<div class="cart-box">
+<h3>Your Cart</h3>
+<div id="cartItems"></div>
+<hr>
+<p><strong>Total: RM <span id="cartTotal">0</span></strong></p>
+<a href="checkout.html" class="btn">Checkout</a>
+<button class="btn" onclick="toggleCart()">Close</button>
+</div>
+</div>
+
+<script src="cart.js"></script>
+
+<div class="navbar">
+<div class="logo"><a href="body.html"><img src="homebutton.png"></a></div>
+<ul class="menu">
+<li><a href="clothes.html">CLOTHES</a></li>
+<li><a href="pants.html">PANTS</a></li>
+<li><a href="shoes.html">SHOES</a></li>
+<li><a href="cap.html" class="active">CAP</a></li>
+<li><a href="teamzass.html">#TEAMZASS</a></li>
+</ul>
+</div>
+
+<h1 class="title">Baseball Cap Collection</h1>
+<div style="width:90%; margin:10px auto 30px;">
+<a href="cap.html" class="btn">← Back to Cap Collection</a>
+</div>
+
+<div class="grid">
+<!-- Cap 1 -->
+<div class="item">
+<img src="basecap1.jpg" alt="Classic Black">
+<h3>Classic Black</h3>
+<p>RM20</p>
+<a class="btn" onclick="addToCart('Classic Black',20)">Add to Cart</a>
+<a class="btn" onclick="showDetails(this)">Details</a>
+<div class="details-popup">
+<h4>Classic Black</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+<!-- Cap 2 -->
+<div class="item">
+<img src="basecap2.jpg" alt="White Logo">
+<h3>White Logo</h3>
+<p>RM20</p>
+<a class="btn" onclick="addToCart('White Logo',20)">Add to Cart</a>
+<a class="btn" onclick="showDetails(this)">Details</a>
+<div class="details-popup">
+<h4>White Logo</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+<!-- Cap 3 -->
+<div class="item">
+<img src="basecap3.jpg" alt="Navy Blue">
+<h3>Navy Blue</h3>
+<p>RM22</p>
+<a class="btn" onclick="addToCart('Navy Blue',22)">Add to Cart</a>
+<a class="btn" onclick="showDetails(this)">Details</a>
+<div class="details-popup">
+<h4>Navy Blue</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+<!-- Cap 4 -->
+<div class="item">
+<img src="basecap4.jpg" alt="Grey Edition">
+<h3>Grey Edition</h3>
+<p>RM22</p>
+<a class="btn" onclick="addToCart('Grey Edition',22)">Add to Cart</a>
+<a class="btn" onclick="showDetails(this)">Details</a>
+<div class="details-popup">
+<h4>Grey Edition</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+<!-- Cap 5 -->
+<div class="item">
+<img src="basecap5.jpg" alt="Red Classic">
+<h3>Red Classic</h3>
+<p>RM24</p>
+<a class="btn" onclick="addToCart('Red Classic',24)">Add to Cart</a>
+<a class="btn" onclick="showDetails(this)">Details</a>
+<div class="details-popup">
+<h4>Red Classic</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+<!-- Cap 6 -->
+<div class="item">
+<img src="basecap6.jpg" alt="Green Sport">
+<h3>Green Sport</h3>
+<p>RM24</p>
+<a class="btn" onclick="addToCart('Green Sport',24)">Add to Cart</a>
+<a class="btn" onclick="showDetails(this)">Details</a>
+<div class="details-popup">
+<h4>Green Sport</h4>
+<p><strong>Size:</strong> Adjustable</p>
+<p><strong>Condition:</strong> New</p>
+<span class="close-btn" onclick="closeDetails(this)">Close</span>
+</div>
+</div>
+
+</div>
+
+<script>
+function showDetails(btn){
+    const popup = btn.nextElementSibling;
+    popup.style.display = 'block';
+}
+function closeDetails(span){
+    const popup = span.parentElement;
+    popup.style.display = 'none';
+}
+function toggleCart(){
+    const cartPopup = document.getElementById('cartPopup');
+    cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+
+</body>
+</html>

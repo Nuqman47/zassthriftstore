@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shoes - Zass Store</title>
+
+<style>
+body {
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#f7f3ef;
+    padding-top:90px; /* space for fixed navbar */
+}
+
+/* NAVBAR */
+.navbar {
+    width:100%;
+    height:80px;
+    background:#4E342E;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:100;
+}
+.logo {
+    margin-left:-50px;
+}
+.logo img {
+    width:230px;
+    height:230px;
+    object-fit:contain;
+    cursor:pointer;
+}
+
+.menu {
+    display:flex;
+    gap:35px;
+    font-size:16px;
+    font-weight:600;
+}
+.menu li {
+    list-style:none;
+    position:relative; /* dropdown */
+}
+.menu a {
+    text-decoration:none;
+    color:#ffffff;
+    padding:8px 5px;
+    display:block;
+}
+.menu a.active,
+.menu a:hover { color:#ffcc80; }
+
+/* DROPDOWN */
+.dropdown-content {
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    background-color:#6D4C41;
+    min-width:160px;
+    flex-direction:column;
+    border-radius:5px;
+    overflow:hidden;
+    z-index:1000;
+}
+.dropdown-content a {
+    padding:10px 15px;
+    color:white;
+    text-decoration:none;
+    display:block;
+}
+.dropdown-content a:hover {
+    background-color:#ffcc80;
+    color:#4E342E;
+}
+.menu li:hover .dropdown-content {
+    display:flex;
+}
+
+/* RIGHT TOOLS */
+.right-tools {
+    display:flex;
+    align-items:center;
+    gap:20px;
+    color:white;
+}
+.search-box {
+    background:#6D4C41;
+    padding:10px 15px;
+    border-radius:30px;
+}
+.search-box input {
+    background:none;
+    border:none;
+    outline:none;
+    color:white;
+}
+
+/* CONTENT */
+.title {
+    text-align:center;
+    margin:40px 0 10px;
+    font-size:32px;
+    font-weight:700;
+    color:#4E342E;
+}
+
+.grid {
+    width:90%;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.item {
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    text-align:center;
+}
+.item img {
+    width:100%;
+    height:250px;
+    object-fit:cover;
+    border-radius:10px;
+}
+.item h3 {
+    margin:12px 0 6px;
+    color:#4E342E;
+}
+.item p {
+    font-weight:600;
+    font-size:18px;
+}
+.btn {
+    background:#4E342E;
+    color:white;
+    padding:10px 18px;
+    border-radius:8px;
+    text-decoration:none;
+    display:inline-block;
+    margin-top:10px;
+}
+.btn:hover {
+    background:#3a2823;
+}
+
+/* CART */
+.floating-cart {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #4E342E;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.cart-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1000;
+}
+
+.cart-box {
+    background: white;
+    width: 320px;
+    padding: 20px;
+    border-radius: 12px;
+    position: absolute;
+    bottom: 80px;
+    left: 20px;
+}
+
+.cart-item {
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- FLOATING CART -->
+<div class="floating-cart" onclick="toggleCart()">
+    🛒 Cart (<span id="cartCount">0</span>)
+</div>
+
+<!-- CART POPUP -->
+<div class="cart-popup" id="cartPopup">
+    <div class="cart-box">
+        <h3>Your Cart</h3>
+        <div id="cartItems"></div>
+        <hr>
+        <p><strong>Total: RM <span id="cartTotal">0</span></strong></p>
+        <a href="checkout.html" class="btn">Checkout</a>
+        <button class="btn" onclick="toggleCart()">Close</button>
+    </div>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function updateCart() {
+    const items = document.getElementById("cartItems");
+    const count = document.getElementById("cartCount");
+    const totalEl = document.getElementById("cartTotal");
+
+    items.innerHTML = "";
+    let total = 0;
+
+    cart.forEach(item => {
+        total += item.price;
+        items.innerHTML += `<div class="cart-item"><span>${item.name}</span><span>RM${item.price}</span></div>`;
+    });
+
+    count.innerText = cart.length;
+    totalEl.innerText = total;
+}
+
+function toggleCart() {
+    const popup = document.getElementById("cartPopup");
+    popup.style.display = popup.style.display === "block" ? "none" : "block";
+}
+
+updateCart();
+</script>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">
+        <a href="body.html"><img src="homebutton.png" alt="Home"></a>
+    </div>
+
+    <ul class="menu">
+        <li>
+            <a href="clothes.html">CLOTHES</a>
+            <div class="dropdown-content">
+                <a href="oversizedtee.html">Oversized Tee</a>
+                <a href="hoodie.html">Hoodie</a>
+                <a href="jacket.html">Jacket</a>
+                <a href="blouse.html">Blouse</a>
+                <a href="shirt.html">Shirt</a>
+            </div>
+        </li>
+        <li>
+            <a href="pants.html">PANTS</a>
+            <div class="dropdown-content">
+                <a href="cargopants.html">Cargo Pants</a>
+                <a href="jeans.html">Jeans</a>
+                <a href="sweatpants.html">Sweatpants</a>
+            </div>
+        </li>
+        <li>
+            <a href="shoes.html" class="active">SHOES</a>
+            <div class="dropdown-content">
+                <a href="sportshoes.html">Sport Shoes</a>
+                <a href="sneakers.html">Sneakers</a>
+                <a href="skateshoes.html">Skate Shoes</a>
+            </div>
+        </li>
+        <li>
+            <a href="cap.html">CAP</a>
+            <div class="dropdown-content">
+                <a href="baseballcap.html">Baseball Cap</a>
+                <a href="vintagecap.html">Vintage Cap</a>
+                <a href="streetwearcap.html">Streetwear Cap</a>
+            </div>
+        </li>
+        <li><a href="teamzass.html">#TEAMZASS</a></li>
+    </ul>
+
+    <div class="right-tools">
+        <div>EN</div>
+        <div class="search-box"><input type="text" placeholder="Search"></div>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<h1 class="title">Shoes Collection</h1>
+
+<div class="grid">
+    <div class="item">
+        <img src="shoe1.jpg" alt="Sport Shoes">
+        <h3>Sport Shoes</h3>
+        <p>From RM68</p>
+        <a href="sportshoes.html" class="btn">View</a>
+    </div>
+
+    <div class="item">
+        <img src="shoe2.jpg" alt="Sneakers">
+        <h3>Sneakers</h3>
+        <p>From RM55</p>
+        <a href="sneakers.html" class="btn">View</a>
+    </div>
+
+    <div class="item">
+        <img src="shoe3.jpg" alt="Skate Shoes">
+        <h3>Skate Shoes</h3>
+        <p>From RM50</p>
+        <a href="skateshoes.html" class="btn">View</a>
+    </div>
+</div>
+
+</body>
+</html>

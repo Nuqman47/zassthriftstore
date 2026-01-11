@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zass Store</title>
+
+<style>
+    /* ---------- GLOBAL ---------- */
+    * { box-sizing: border-box; margin:0; padding:0; }
+    html, body { height: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; }
+    body {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    body.show { opacity: 1; transform: translateY(0); }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+        width: 100%;
+        height: 80px;
+        background: #4E342E;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        padding-right: 30px;
+    }
+
+    .logo { margin-left: -50px; }
+    .logo img { width: 230px; height: 230px; object-fit: contain; cursor: pointer; }
+
+    .menu {
+        display: flex;
+        gap: 35px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .menu li { 
+        list-style: none; 
+        position: relative; /* penting untuk dropdown positioning */
+    }
+
+    .menu a.main-link { text-decoration: none; color: #ffffff; }
+    .menu a.main-link:hover { color: #ffcc80; }
+
+    /* ---------- DROPDOWN ---------- */
+    .menu li .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%; /* bawah item menu */
+        left: 0;
+        background-color: #6D4C41;
+        min-width: 180px;
+        flex-direction: column;
+        z-index: 1000;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .menu li .dropdown-content a {
+        padding: 10px 15px;
+        color: white;
+        text-decoration: none;
+        display: block;
+    }
+
+    .menu li .dropdown-content a:hover {
+        background-color: #ffcc80;
+        color: #4E342E;
+    }
+
+    /* Show dropdown on hover */
+    .menu li:hover .dropdown-content {
+        display: flex;
+    }
+
+    .right-tools { display: flex; align-items: center; gap: 15px; color: white; }
+    .search-box { background: #6D4C41; padding: 10px 15px; border-radius: 30px; }
+    .search-box input { border: none; background: none; outline: none; color: #fff; }
+    .logout-btn {
+        background: #ffcc80;
+        color: #4E342E;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .logout-btn:hover { background: #ffb74d; }
+
+    /* ---------- HERO ---------- */
+    .hero {
+        width: 100%;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: blur(3px);
+        z-index: -1;
+    }
+
+    /* HERO TEXT HORIZONTAL */
+    .hero-text {
+        display: flex;          /* logo + text in a row */
+        align-items: center;    /* vertical center */
+        gap: 20px;
+        text-align: left;
+    }
+
+    /* LOGO FLY-IN */
+    .hero-logo {
+        width: 150px;
+        opacity: 0;
+        transform: translateX(-120px);
+        transition: all 1s ease;
+    }
+
+    /* TEXT FLY-IN */
+    .hero-title {
+        font-family: "Times New Roman", Times, serif;
+        color: white;
+        -webkit-text-stroke: 2px gold;
+        opacity: 0;
+        transform: translateX(120px);
+        transition: all 1s ease;
+    }
+
+    body.show .hero-logo,
+    body.show .hero-title {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .hero-title span {
+        font-size: 40px;
+        letter-spacing: 3px;
+        font-weight: 700;
+        display: block;
+    }
+
+    .hero-title h2 {
+        font-size: 90px;
+        margin: 0;
+        line-height: 0.7;
+    }
+
+    /* ---------- WHATSAPP ---------- */
+    .whatsapp-btn { position: fixed; right: -55px; bottom: -90px; z-index: 100; }
+    .whatsapp-btn img { width: 180px; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+        .hero-title h2 { font-size: 50px; }
+        .hero-title span { font-size: 25px; }
+        .hero-logo { width: 120px; }
+    }
+
+    @media (max-width: 480px) {
+        .hero-title h2 { font-size: 35px; }
+        .hero-title span { font-size: 20px; }
+        .hero-logo { width: 100px; }
+    }
+
+</style>
+</head>
+
+<body>
+
+<script>
+/* LOGIN PROTECTION */
+if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "index.html";
+}
+
+/* PAGE + HERO TRANSITION */
+window.onload = () => { document.body.classList.add("show"); };
+
+/* LOGOUT */
+function logout() {
+    localStorage.clear();
+    window.location.href = "index.html";
+}
+</script>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">
+        <a href="body.html">
+            <img src="homebutton.png" alt="Home Button">
+        </a>
+    </div>
+
+    <ul class="menu">
+        <!-- CLOTHES -->
+        <li>
+            <a href="clothes.html" class="main-link">CLOTHES</a>
+            <div class="dropdown-content">
+                <a href="oversizedtee.html">Oversized Tee</a>
+                <a href="hoodie.html">Hoodie</a>
+                <a href="jacket.html">Jacket</a>
+                <a href="blouse.html">Blouse</a>
+                <a href="shirt.html">Shirt</a>
+            </div>
+        </li>
+
+        <!-- PANTS -->
+        <li>
+            <a href="pants.html" class="main-link">PANTS</a>
+            <div class="dropdown-content">
+                <a href="cargopants.html">Cargo Pants</a>
+                <a href="jeans.html">Jeans</a>
+                <a href="sweatpants.html">Sweatpants</a>
+            </div>
+        </li>
+
+        <!-- SHOES -->
+        <li>
+            <a href="shoes.html" class="main-link">SHOES</a>
+            <div class="dropdown-content">
+                <a href="sportshoes.html">Sport Shoes</a>
+                <a href="sneakers.html">Sneakers</a>
+                <a href="skateshoes.html">Skate Shoes</a>
+            </div>
+        </li>
+
+        <!-- CAP -->
+        <li>
+            <a href="cap.html" class="main-link">CAP</a>
+            <div class="dropdown-content">
+                <a href="baseballcap.html">Baseball Cap</a>
+                <a href="vintagecap.html">Vintage Cap</a>
+                <a href="streetwearcap.html">Streetwear Cap</a>
+            </div>
+        </li>
+
+        <li><a href="teamzass.html" class="main-link" style="color:#ffcc80;">#TEAMZASS</a></li>
+    </ul>
+
+    <div class="right-tools">
+        <div>EN</div>
+        <div class="search-box">
+            <input type="text" placeholder="Search">
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <video autoplay muted loop playsinline>
+        <source src="vidwallpaper.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-text">
+        <img src="logo.png" alt="Zass Store Logo" class="hero-logo">
+        <div class="hero-title">
+            <span>ZASS THRIFT</span>
+            <h2>STORE</h2>
+        </div>
+    </div>
+</div>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/60123456789" class="whatsapp-btn" target="_blank">
+    <img src="whatsapp1.png" alt="WhatsApp">
+</a>
+
+</body>
+</html>

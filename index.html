@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome | Zass Store</title>
+<style>
+/* ================= BODY & VIDEO BACKGROUND ================= */
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+    background:#000;
+}
+
+/* Video fullscreen behind */
+#bgVideo{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:0;
+}
+
+/* ================= LOGIN BOX ================= */
+.login-box{
+    position:relative;
+    z-index:1; /* above video */
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius:16px;
+    padding:40px;
+    width:360px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.4);
+    text-align:center;
+}
+
+.login-box img{
+    width:120px;
+    margin-bottom:10px;
+}
+
+h2{color:#fff;}
+p{font-size:14px;color:#eee;margin-bottom:25px;}
+
+.input-group{
+    position:relative;
+    margin-bottom:20px;
+}
+.input-group input{
+    width:100%;
+    padding:14px 12px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.1);
+    color:#fff;
+    outline:none;
+}
+.input-group input::placeholder{color:transparent;}
+.input-group label{
+    position:absolute;
+    top:50%;
+    left:12px;
+    transform:translateY(-50%);
+    color:rgba(255,255,255,0.7);
+    transition:.3s;
+    background: rgba(255,255,255,0.2);
+    padding:0 5px;
+}
+.input-group input:focus+label,
+.input-group input:not(:placeholder-shown)+label{
+    top:-8px;
+    font-size:12px;
+    color:#fff;
+}
+
+/* ---------- PASSWORD TOGGLE ---------- */
+.toggle-password{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    font-size:14px;
+    color:#fff;
+}
+
+/* ---------- REMEMBER ME ---------- */
+.remember{
+    text-align:left;
+    font-size:14px;
+    margin-bottom:20px;
+    color:#fff;
+}
+
+/* ---------- BUTTON ---------- */
+button{
+    width:100%;
+    padding:12px;
+    background:#4E342E;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin-bottom:15px;
+    font-weight:600;
+    transition:.3s;
+}
+button:hover{background:#3a2823;}
+
+.social-login{
+    display:flex;
+    gap:10px;
+}
+.social-btn{
+    flex:1;
+    padding:10px;
+    border-radius:6px;
+    border:none;
+    color:#fff;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+}
+.google{background:#db4437;}
+.facebook{background:#3b5998;}
+.social-btn:hover{transform:scale(1.05); opacity:.85;}
+
+/* ================= POPUP ================= */
+.popup{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:2;
+}
+.popup.active{display:flex;}
+
+.popup-box{
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius:12px;
+    width:360px;
+    padding:30px;
+    position:relative;
+    box-shadow:0 8px 30px rgba(0,0,0,0.4);
+    animation:pop .3s ease;
+}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+
+.popup-box img{
+    width:80px;
+    margin-bottom:15px;
+}
+
+.popup-box input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.1);
+    color:#fff;
+    outline:none;
+}
+
+.popup-box input::placeholder{color:transparent;}
+
+/* CLOSE BUTTON */
+.close{
+    position:absolute;
+    top:12px;
+    right:12px;
+    font-size:18px;
+    cursor:pointer;
+    color:#fff;
+}
+</style>
+</head>
+<body>
+
+<!-- ================= VIDEO BACKGROUND ================= -->
+<video autoplay muted loop id="bgVideo">
+    <source src="indexbg.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<!-- ================= LOGIN BOX ================= -->
+<div class="login-box">
+    <img src="logo.png" alt="Zass Logo">
+    <h2>Welcome to Zass Thrift Store</h2>
+    <p>Login to continue</p>
+
+    <div class="input-group password-wrapper">
+        <input type="email" id="email" placeholder=" " required>
+        <label>Email</label>
+    </div>
+
+    <div class="input-group password-wrapper">
+        <input type="password" id="password" placeholder=" " required>
+        <label>Password</label>
+        <span class="toggle-password" onclick="toggleMainPassword()">Show</span>
+    </div>
+
+    <div class="remember">
+        <label><input type="checkbox" id="rememberMe"> Remember me</label>
+    </div>
+
+    <button onclick="login()">Login</button>
+
+    <div class="social-login">
+        <button class="social-btn google" onclick="openGoogle()">Google</button>
+        <button class="social-btn facebook" onclick="openFacebook()">Facebook</button>
+    </div>
+</div>
+
+<!-- ================= GOOGLE POPUP ================= -->
+<div class="popup" id="googlePopup">
+    <div class="popup-box">
+        <div class="close" onclick="closePopup()">✕</div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg">
+        <h3>Sign in</h3>
+        <p style="font-size:13px;color:#fff;">Use your Google Account</p>
+        <div class="input-group">
+            <input type="email" id="googleEmail" placeholder=" " required>
+            <label>Email</label>
+        </div>
+        <div class="input-group password-wrapper">
+            <input type="password" id="googlePassword" placeholder=" " required>
+            <label>Password</label>
+            <span class="toggle-password" onclick="toggleGooglePassword()">Show</span>
+        </div>
+        <button onclick="socialSuccess()">Next</button>
+    </div>
+</div>
+
+<!-- ================= FACEBOOK POPUP ================= -->
+<div class="popup" id="facebookPopup">
+    <div class="popup-box">
+        <div class="close" onclick="closePopup()">✕</div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png">
+        <h3>Log in to Facebook</h3>
+        <div class="input-group">
+            <input type="text" id="fbEmail" placeholder=" " required>
+            <label>Email or phone</label>
+        </div>
+        <div class="input-group password-wrapper">
+            <input type="password" id="fbPassword" placeholder=" " required>
+            <label>Password</label>
+            <span class="toggle-password" onclick="toggleFBPassword()">Show</span>
+        </div>
+        <button style="background:#1877f2" onclick="socialSuccess()">Log In</button>
+    </div>
+</div>
+
+<script>
+// ---------- MAIN LOGIN PASSWORD ----------
+function toggleMainPassword(){
+    const pw = document.getElementById("password");
+    const txt = document.querySelector(".login-box .toggle-password");
+    if(pw.type==="password"){pw.type="text"; txt.textContent="Hide";}
+    else{pw.type="password"; txt.textContent="Show";}
+}
+
+// ---------- GOOGLE POPUP PASSWORD ----------
+function toggleGooglePassword(){
+    const pw = document.getElementById("googlePassword");
+    const txt = document.querySelector("#googlePopup .toggle-password");
+    if(pw.type==="password"){pw.type="text"; txt.textContent="Hide";}
+    else{pw.type="password"; txt.textContent="Show";}
+}
+
+// ---------- FACEBOOK POPUP PASSWORD ----------
+function toggleFBPassword(){
+    const pw = document.getElementById("fbPassword");
+    const txt = document.querySelector("#facebookPopup .toggle-password");
+    if(pw.type==="password"){pw.type="text"; txt.textContent="Hide";}
+    else{pw.type="password"; txt.textContent="Show";}
+}
+
+// ---------- LOGIN FUNCTIONS ----------
+function login(){
+    localStorage.setItem("isLoggedIn","true");
+    window.location.href="body.html";
+}
+
+function openGoogle(){document.getElementById("googlePopup").classList.add("active");}
+function openFacebook(){document.getElementById("facebookPopup").classList.add("active");}
+function closePopup(){document.querySelectorAll(".popup").forEach(p=>p.classList.remove("active"));}
+
+function socialSuccess(){
+    localStorage.setItem("isLoggedIn","true");
+    window.location.href="body.html";
+}
+</script>
+
+</body>
+</html>
